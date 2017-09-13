@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.8.2" last-position="0,0" last-zoom="1"
+	 default-owner="postgres">
+<role name="pythiaservice"
+      password="pythiaservice">
+</role>
+
+<database name="new_database">
+</database>
+
+<schema name="public" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<schema name="project" rect-visible="true" fill-color="#e1e1e1">
+	<role name="pythiaservice"/>
+</schema>
+
+<table name="project">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+	<position x="140" y="100"/>
+	<column name="id" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="hansuprojectid">
+		<type name="varchar"/>
+	</column>
+	<column name="name">
+		<type name="varchar"/>
+	</column>
+	<column name="description">
+		<type name="varchar"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp"/>
+	</column>
+	<column name="created_by">
+		<type name="varchar"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp"/>
+	</column>
+	<column name="updated_by">
+		<type name="varchar"/>
+	</column>
+	<constraint name="projectid_pri" type="pk-constr" table="project.project">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="plan">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+	<position x="520" y="220"/>
+	<column name="id" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="projectid">
+		<type name="smallint"/>
+	</column>
+	<column name="mainno">
+		<type name="smallint"/>
+	</column>
+	<column name="subno">
+		<type name="smallint"/>
+	</column>
+	<column name="version">
+		<type name="varchar"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp"/>
+	</column>
+	<column name="created_by">
+		<type name="varchar"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp"/>
+	</column>
+	<column name="updated_by">
+		<type name="varchar"/>
+	</column>
+	<constraint name="planid_pri" type="pk-constr" table="project.plan">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="project_index" table="project.project"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="id"/>
+		</idxelement>
+</index>
+
+<index name="plan_id" table="project.plan"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="id"/>
+		</idxelement>
+</index>
+
+<constraint name="projecid_for" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="project.project" table="project.plan">
+	<columns names="projectid" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="&quot;rel_Plan_Project&quot;" type="relfk"
+	 src-table="project.plan"
+	 dst-table="project.project"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.8.2" last-position="0,8" last-zoom="1"
+	 default-schema="public" default-owner="postgres">
+<role name="pythiaservice"
+      password="pythiaservice">
+</role>
+
+<database name="new_database">
+</database>
+
+<schema name="public" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="Project">
+	<schema name="pythia"/>
+	<role name="pythiaservice"/>
+	<position x="140" y="103"/>
+	<column name="id" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<column name="schemeid">
+		<type name="varchar"/>
+	</column>
+	<column name="name">
+		<type name="varchar"/>
+	</column>
+	<column name="description">
+		<type name="varchar"/>
+	</column>
+	<column name="date">
+		<type name="time"/>
+	</column>
+	<column name="username">
+		<type name="varchar"/>
+	</column>
+	<constraint name="projectid_pri" type="pk-constr" table="pythia.&quot;Project&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Plan">
+	<schema name="pythia"/>
+	<role name="pythiaservice"/>
+	<position x="480" y="120"/>
+	<column name="id" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<column name="projectid">
+		<type name="smallint"/>
+	</column>
+	<column name="mainno">
+		<type name="smallint"/>
+	</column>
+	<column name="subno">
+		<type name="smallint"/>
+	</column>
+	<column name="version">
+		<type name="varchar"/>
+	</column>
+	<column name="date">
+		<type name="time"/>
+	</column>
+	<column name="username">
+		<type name="varchar"/>
+	</column>
+	<constraint name="planid_pri" type="pk-constr" table="pythia.&quot;Plan&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<schema name="pythia" rect-visible="true" fill-color="#e1e1e1">
+	<role name="pythiaservice"/>
+</schema>
+
+<constraint name="projecid_for" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="pythia.&quot;Project&quot;" table="pythia.&quot;Plan&quot;">
+	<columns names="projectid" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="&quot;rel_Plan_Project&quot;" type="relfk"
+	 src-table="pythia.&quot;Plan&quot;"
+	 dst-table="pythia.&quot;Project&quot;"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
