@@ -37,22 +37,13 @@ ON ALL TABLES IN SCHEMA public TO pythiaservice;]]></appended-sql>
 	<column name="hansu_project_id">
 		<type name="varchar"/>
 	</column>
+	<column name="main_no">
+		<type name="smallint"/>
+	</column>
 	<column name="name">
 		<type name="varchar"/>
 	</column>
 	<column name="description">
-		<type name="varchar"/>
-	</column>
-	<column name="created_at">
-		<type name="timestamptz"/>
-	</column>
-	<column name="created_by">
-		<type name="varchar"/>
-	</column>
-	<column name="updated_at">
-		<type name="timestamptz"/>
-	</column>
-	<column name="updated_by">
 		<type name="varchar"/>
 	</column>
 	<constraint name="projectid_pri" type="pk-constr" table="project.project">
@@ -77,18 +68,6 @@ ON ALL TABLES IN SCHEMA public TO pythiaservice;]]></appended-sql>
 		<type name="smallint"/>
 	</column>
 	<column name="version">
-		<type name="varchar"/>
-	</column>
-	<column name="created_at">
-		<type name="timestamptz"/>
-	</column>
-	<column name="created_by">
-		<type name="varchar"/>
-	</column>
-	<column name="updated_at">
-		<type name="timestamptz"/>
-	</column>
-	<column name="updated_by">
 		<type name="varchar"/>
 	</column>
 	<constraint name="planid_pri" type="pk-constr" table="project.plan">

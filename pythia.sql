@@ -22,6 +22,15 @@ ON ALL TABLES IN SCHEMA public TO pythiaservice;
 -- ddl-end --
 
 
+-- Database creation must be done outside an multicommand file.
+-- These commands were put in this file only for convenience.
+-- -- object: new_database | type: DATABASE --
+-- -- DROP DATABASE IF EXISTS new_database;
+-- CREATE DATABASE new_database
+-- ;
+-- -- ddl-end --
+-- 
+
 -- object: project | type: SCHEMA --
 -- DROP SCHEMA IF EXISTS project CASCADE;
 CREATE SCHEMA project;
@@ -37,12 +46,9 @@ SET search_path TO pg_catalog,public,project;
 CREATE TABLE project.project(
 	project_id bigint NOT NULL,
 	hansu_project_id varchar,
+	main_no smallint,
 	name varchar,
 	description varchar,
-	created_at timestamptz,
-	created_by varchar,
-	updated_at timestamptz,
-	updated_by varchar,
 	CONSTRAINT projectid_pri PRIMARY KEY (project_id)
 
 );
@@ -58,10 +64,6 @@ CREATE TABLE project.plan(
 	main_no smallint,
 	sub_no smallint,
 	version varchar,
-	created_at timestamptz,
-	created_by varchar,
-	updated_at timestamptz,
-	updated_by varchar,
 	CONSTRAINT planid_pri PRIMARY KEY (plan_id)
 
 );
