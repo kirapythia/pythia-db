@@ -77,7 +77,7 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 		<type name="varchar"/>
 	</column>
 	<column name="approved">
-		<type name="bigint"/>
+		<type name="boolean"/>
 	</column>
 	<constraint name="planid_pri" type="pk-constr" table="project.plan">
 		<columns names="plan_id" ref-type="src-columns"/>
@@ -118,7 +118,7 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 
 <table name="Comment">
 	<schema name="project"/>
-	<role name="postgres"/>
+	<role name="pythiaservice"/>
 	<position x="540" y="80"/>
 	<column name="comment_id" not-null="true">
 		<type name="bigint"/>
@@ -139,7 +139,7 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 
 <table name="project_mapping">
 	<schema name="project"/>
-	<role name="postgres"/>
+	<role name="pythiaservice"/>
 	<position x="60" y="340"/>
 	<column name="mapping_id" not-null="true">
 		<type name="bigint"/>

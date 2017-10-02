@@ -49,6 +49,7 @@ CREATE TABLE project.project(
 	main_no smallint,
 	name varchar,
 	description varchar,
+	completed boolean,
 	CONSTRAINT projectid_pri PRIMARY KEY (project_id)
 
 );
@@ -65,7 +66,7 @@ CREATE TABLE project.plan(
 	sub_no smallint,
 	version varchar,
 	url varchar,
-	approved bigint,
+	approved boolean,
 	CONSTRAINT planid_pri PRIMARY KEY (plan_id)
 
 );
@@ -130,7 +131,7 @@ CREATE TABLE project."Comment"(
 
 );
 -- ddl-end --
-ALTER TABLE project."Comment" OWNER TO postgres;
+ALTER TABLE project."Comment" OWNER TO pythiaservice;
 -- ddl-end --
 
 -- object: project.project_mapping | type: TABLE --
@@ -143,7 +144,7 @@ CREATE TABLE project.project_mapping(
 
 );
 -- ddl-end --
-ALTER TABLE project.project_mapping OWNER TO postgres;
+ALTER TABLE project.project_mapping OWNER TO pythiaservice;
 -- ddl-end --
 
 -- object: projecid_for | type: CONSTRAINT --
