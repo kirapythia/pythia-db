@@ -120,9 +120,9 @@ CREATE SEQUENCE project.plan_serial
 ALTER SEQUENCE project.plan_serial OWNER TO pythiaservice;
 -- ddl-end --
 
--- object: project."Comment" | type: TABLE --
--- DROP TABLE IF EXISTS project."Comment" CASCADE;
-CREATE TABLE project."Comment"(
+-- object: project.comment | type: TABLE --
+-- DROP TABLE IF EXISTS project.comment CASCADE;
+CREATE TABLE project.comment(
 	comment_id bigint NOT NULL,
 	text varchar,
 	approved boolean,
@@ -131,7 +131,7 @@ CREATE TABLE project."Comment"(
 
 );
 -- ddl-end --
-ALTER TABLE project."Comment" OWNER TO pythiaservice;
+ALTER TABLE project.comment OWNER TO pythiaservice;
 -- ddl-end --
 
 -- object: project.project_mapping | type: TABLE --
@@ -169,8 +169,8 @@ ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
 -- object: plan_fkey | type: CONSTRAINT --
--- ALTER TABLE project."Comment" DROP CONSTRAINT IF EXISTS plan_fkey CASCADE;
-ALTER TABLE project."Comment" ADD CONSTRAINT plan_fkey FOREIGN KEY (plan_id)
+-- ALTER TABLE project.comment DROP CONSTRAINT IF EXISTS plan_fkey CASCADE;
+ALTER TABLE project.comment ADD CONSTRAINT plan_fkey FOREIGN KEY (plan_id)
 REFERENCES project.plan (plan_id) MATCH FULL
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --

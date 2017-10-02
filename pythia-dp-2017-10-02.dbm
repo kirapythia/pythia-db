@@ -116,7 +116,7 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	<role name="pythiaservice"/>
 </sequence>
 
-<table name="Comment">
+<table name="comment">
 	<schema name="project"/>
 	<role name="pythiaservice"/>
 	<position x="540" y="80"/>
@@ -132,7 +132,7 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	<column name="plan_id">
 		<type name="bigint"/>
 	</column>
-	<constraint name="comment_pri" type="pk-constr" table="project.&quot;Comment&quot;">
+	<constraint name="comment_pri" type="pk-constr" table="project.comment">
 		<columns names="comment_id" ref-type="src-columns"/>
 	</constraint>
 </table>
@@ -170,7 +170,7 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 </constraint>
 
 <constraint name="plan_fkey" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="project.plan" table="project.&quot;Comment&quot;">
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="project.plan" table="project.comment">
 	<columns names="plan_id" ref-type="src-columns"/>
 	<columns names="plan_id" ref-type="dst-columns"/>
 </constraint>
@@ -187,7 +187,7 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	 src-required="false" dst-required="false"/>
 
 <relationship name="&quot;rel_Comment_plan&quot;" type="relfk"
-	 src-table="project.&quot;Comment&quot;"
+	 src-table="project.comment"
 	 dst-table="project.plan"
 	 src-required="false" dst-required="false"/>
 
