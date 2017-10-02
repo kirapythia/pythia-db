@@ -147,6 +147,20 @@ CREATE TABLE project.project_mapping(
 ALTER TABLE project.project_mapping OWNER TO pythiaservice;
 -- ddl-end --
 
+-- object: project.pmap_serial | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS project.pmap_serial CASCADE;
+CREATE SEQUENCE project.pmap_serial
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE project.pmap_serial OWNER TO pythiaservice;
+-- ddl-end --
+
 -- object: projecid_for | type: CONSTRAINT --
 -- ALTER TABLE project.plan DROP CONSTRAINT IF EXISTS projecid_for CASCADE;
 ALTER TABLE project.plan ADD CONSTRAINT projecid_for FOREIGN KEY (project_id)

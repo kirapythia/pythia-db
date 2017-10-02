@@ -155,6 +155,14 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	</constraint>
 </table>
 
+<sequence name="pmap_serial"
+	 start="1" increment="1"
+	 min-value="0" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+</sequence>
+
 <constraint name="projecid_for" type="fk-constr" comparison-type="MATCH FULL"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="project.project" table="project.plan">
 	<columns names="project_id" ref-type="src-columns"/>
