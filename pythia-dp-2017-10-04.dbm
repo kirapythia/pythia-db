@@ -140,11 +140,11 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	</constraint>
 </table>
 
-<table name="project_mapping">
+<table name="sister_project">
 	<schema name="project"/>
 	<role name="pythiaservice"/>
 	<position x="60" y="340"/>
-	<column name="mapping_id" not-null="true">
+	<column name="id" not-null="true">
 		<type name="bigint"/>
 	</column>
 	<column name="project_id">
@@ -153,8 +153,8 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	<column name="sister_project_id">
 		<type name="bigint"/>
 	</column>
-	<constraint name="project_pri" type="pk-constr" table="project.project_mapping">
-		<columns names="mapping_id" ref-type="src-columns"/>
+	<constraint name="project_pri" type="pk-constr" table="project.sister_project">
+		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 </table>
 
@@ -187,7 +187,7 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 </constraint>
 
 <constraint name="project_fkey" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="project.project" table="project.project_mapping">
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="project.project" table="project.sister_project">
 	<columns names="project_id" ref-type="src-columns"/>
 	<columns names="project_id" ref-type="dst-columns"/>
 </constraint>
@@ -203,7 +203,7 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	 src-required="false" dst-required="false"/>
 
 <relationship name="rel_project_mapping_project" type="relfk"
-	 src-table="project.project_mapping"
+	 src-table="project.sister_project"
 	 dst-table="project.project"
 	 src-required="false" dst-required="false"/>
 

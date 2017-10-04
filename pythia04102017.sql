@@ -135,17 +135,17 @@ CREATE TABLE project.comment(
 ALTER TABLE project.comment OWNER TO pythiaservice;
 -- ddl-end --
 
--- object: project.project_mapping | type: TABLE --
--- DROP TABLE IF EXISTS project.project_mapping CASCADE;
-CREATE TABLE project.project_mapping(
-	mapping_id bigint NOT NULL,
+-- object: project.sister_project | type: TABLE --
+-- DROP TABLE IF EXISTS project.sister_project CASCADE;
+CREATE TABLE project.sister_project(
+	id bigint NOT NULL,
 	project_id bigint,
 	sister_project_id bigint,
-	CONSTRAINT project_pri PRIMARY KEY (mapping_id)
+	CONSTRAINT project_pri PRIMARY KEY (id)
 
 );
 -- ddl-end --
-ALTER TABLE project.project_mapping OWNER TO pythiaservice;
+ALTER TABLE project.sister_project OWNER TO pythiaservice;
 -- ddl-end --
 
 -- object: project.pmap_serial | type: SEQUENCE --
@@ -191,8 +191,8 @@ ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
 -- object: project_fkey | type: CONSTRAINT --
--- ALTER TABLE project.project_mapping DROP CONSTRAINT IF EXISTS project_fkey CASCADE;
-ALTER TABLE project.project_mapping ADD CONSTRAINT project_fkey FOREIGN KEY (project_id)
+-- ALTER TABLE project.sister_project DROP CONSTRAINT IF EXISTS project_fkey CASCADE;
+ALTER TABLE project.sister_project ADD CONSTRAINT project_fkey FOREIGN KEY (project_id)
 REFERENCES project.project (project_id) MATCH FULL
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
