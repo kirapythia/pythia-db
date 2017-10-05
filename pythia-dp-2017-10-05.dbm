@@ -83,7 +83,7 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 		<type name="smallint"/>
 	</column>
 	<column name="version">
-		<type name="varchar"/>
+		<type name="smallint"/>
 	</column>
 	<column name="url">
 		<type name="varchar"/>
@@ -150,11 +150,14 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	<column name="text">
 		<type name="varchar"/>
 	</column>
-	<column name="approved">
-		<type name="boolean"/>
-	</column>
 	<column name="plan_id">
 		<type name="bigint"/>
+	</column>
+	<column name="url">
+		<type name="varchar"/>
+	</column>
+	<column name="approved">
+		<type name="boolean"/>
 	</column>
 	<column name="created_at">
 		<type name="timestamptz"/>
