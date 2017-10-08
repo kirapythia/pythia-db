@@ -1,4 +1,4 @@
 # pythia-db
-##Latest version   
+## Latest version   
 * Run pythia-version.sql   
 * Run create_view.sql   
