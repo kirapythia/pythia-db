@@ -50,6 +50,10 @@ CREATE TABLE project.project(
 	name varchar,
 	description varchar,
 	completed boolean,
+	created_at timestamptz,
+	created_by varchar,
+	updated_at timestamptz,
+	updated_by varchar,
 	CONSTRAINT projectid_pri PRIMARY KEY (project_id)
 
 );
@@ -64,9 +68,14 @@ CREATE TABLE project.plan(
 	project_id bigint,
 	main_no smallint,
 	sub_no smallint,
-	version varchar,
+	version smallint,
 	url varchar,
 	approved boolean,
+	created_at timestamptz,
+	created_by varchar,
+	updated_at timestamptz,
+	updated_by varchar,
+	deleted boolean,
 	CONSTRAINT planid_pri PRIMARY KEY (plan_id)
 
 );
@@ -125,8 +134,13 @@ ALTER SEQUENCE project.plan_serial OWNER TO pythiaservice;
 CREATE TABLE project.comment(
 	comment_id bigint NOT NULL,
 	text varchar,
-	approved boolean,
 	plan_id bigint,
+	url varchar,
+	approved boolean,
+	created_at timestamptz,
+	created_by varchar,
+	updated_at timestamptz,
+	updated_by varchar,
 	CONSTRAINT comment_pri PRIMARY KEY (comment_id)
 
 );
@@ -134,17 +148,17 @@ CREATE TABLE project.comment(
 ALTER TABLE project.comment OWNER TO pythiaservice;
 -- ddl-end --
 
--- object: project.project_mapping | type: TABLE --
--- DROP TABLE IF EXISTS project.project_mapping CASCADE;
-CREATE TABLE project.project_mapping(
-	mapping_id bigint NOT NULL,
+-- object: project.sister_project | type: TABLE --
+-- DROP TABLE IF EXISTS project.sister_project CASCADE;
+CREATE TABLE project.sister_project(
+	id bigint NOT NULL,
 	project_id bigint,
 	sister_project_id bigint,
-	CONSTRAINT project_pri PRIMARY KEY (mapping_id)
+	CONSTRAINT project_pri PRIMARY KEY (id)
 
 );
 -- ddl-end --
-ALTER TABLE project.project_mapping OWNER TO pythiaservice;
+ALTER TABLE project.sister_project OWNER TO pythiaservice;
 -- ddl-end --
 
 -- object: project.pmap_serial | type: SEQUENCE --
@@ -172,7 +186,24 @@ CREATE SEQUENCE project.comm_serial
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE project.comm_serial OWNER TO postgres;
+ALTER SEQUENCE project.comm_serial OWNER TO pythiaservice;
+-- ddl-end --
+
+-- object: project.latest_plans | type: VIEW --
+-- DROP VIEW IF EXISTS project.latest_plans CASCADE;
+CREATE VIEW project.latest_plans
+AS 
+
+SELECT
+   project.plan.*;
+-- ddl-end --
+ALTER VIEW project.latest_plans OWNER TO postgres;
+-- ddl-end --
+
+-- Appended SQL commands --
+SELECT * FROM project.latest_plans
+ORDER BY project.latest_plans.version DESC
+FETCH FIRST 2 ROWS ONLY;
 -- ddl-end --
 
 -- object: projecid_for | type: CONSTRAINT --
@@ -190,8 +221,8 @@ ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
 -- object: project_fkey | type: CONSTRAINT --
--- ALTER TABLE project.project_mapping DROP CONSTRAINT IF EXISTS project_fkey CASCADE;
-ALTER TABLE project.project_mapping ADD CONSTRAINT project_fkey FOREIGN KEY (project_id)
+-- ALTER TABLE project.sister_project DROP CONSTRAINT IF EXISTS project_fkey CASCADE;
+ALTER TABLE project.sister_project ADD CONSTRAINT project_fkey FOREIGN KEY (project_id)
 REFERENCES project.project (project_id) MATCH FULL
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --

@@ -5,7 +5,7 @@
 -- Model Author: ---
 
 -- object: pythiaservice | type: ROLE --
--- DROP ROLE IF EXISTS pythiaservice;
+ DROP ROLE IF EXISTS pythiaservice;
 CREATE ROLE pythiaservice WITH 
 	CREATEDB
 	CREATEROLE
@@ -25,14 +25,14 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;
 -- Database creation must be done outside an multicommand file.
 -- These commands were put in this file only for convenience.
 -- -- object: new_database | type: DATABASE --
--- -- DROP DATABASE IF EXISTS new_database;
+--  DROP DATABASE IF EXISTS new_database;
 -- CREATE DATABASE new_database
 -- ;
 -- -- ddl-end --
 -- 
 
 -- object: project | type: SCHEMA --
--- DROP SCHEMA IF EXISTS project CASCADE;
+ DROP SCHEMA IF EXISTS project CASCADE;
 CREATE SCHEMA project;
 -- ddl-end --
 ALTER SCHEMA project OWNER TO pythiaservice;
@@ -42,7 +42,7 @@ SET search_path TO pg_catalog,public,project;
 -- ddl-end --
 
 -- object: project.project | type: TABLE --
--- DROP TABLE IF EXISTS project.project CASCADE;
+ DROP TABLE IF EXISTS project.project CASCADE;
 CREATE TABLE project.project(
 	project_id bigint NOT NULL,
 	hansu_project_id varchar,
@@ -62,7 +62,7 @@ ALTER TABLE project.project OWNER TO pythiaservice;
 -- ddl-end --
 
 -- object: project.plan | type: TABLE --
--- DROP TABLE IF EXISTS project.plan CASCADE;
+ DROP TABLE IF EXISTS project.plan CASCADE;
 CREATE TABLE project.plan(
 	plan_id bigint NOT NULL,
 	project_id bigint,
@@ -83,7 +83,7 @@ ALTER TABLE project.plan OWNER TO pythiaservice;
 -- ddl-end --
 
 -- object: project_index | type: INDEX --
--- DROP INDEX IF EXISTS project.project_index CASCADE;
+ DROP INDEX IF EXISTS project.project_index CASCADE;
 CREATE INDEX project_index ON project.project
 	USING btree
 	(
@@ -92,7 +92,7 @@ CREATE INDEX project_index ON project.project
 -- ddl-end --
 
 -- object: plan_id | type: INDEX --
--- DROP INDEX IF EXISTS project.plan_id CASCADE;
+ DROP INDEX IF EXISTS project.plan_id CASCADE;
 CREATE INDEX plan_id ON project.plan
 	USING btree
 	(
@@ -101,7 +101,7 @@ CREATE INDEX plan_id ON project.plan
 -- ddl-end --
 
 -- object: project.proj_serial | type: SEQUENCE --
--- DROP SEQUENCE IF EXISTS project.proj_serial CASCADE;
+ DROP SEQUENCE IF EXISTS project.proj_serial CASCADE;
 CREATE SEQUENCE project.proj_serial
 	INCREMENT BY 1
 	MINVALUE 0
@@ -115,7 +115,7 @@ ALTER SEQUENCE project.proj_serial OWNER TO pythiaservice;
 -- ddl-end --
 
 -- object: project.plan_serial | type: SEQUENCE --
--- DROP SEQUENCE IF EXISTS project.plan_serial CASCADE;
+ DROP SEQUENCE IF EXISTS project.plan_serial CASCADE;
 CREATE SEQUENCE project.plan_serial
 	INCREMENT BY 1
 	MINVALUE 0
@@ -129,7 +129,7 @@ ALTER SEQUENCE project.plan_serial OWNER TO pythiaservice;
 -- ddl-end --
 
 -- object: project.comment | type: TABLE --
--- DROP TABLE IF EXISTS project.comment CASCADE;
+ DROP TABLE IF EXISTS project.comment CASCADE;
 CREATE TABLE project.comment(
 	comment_id bigint NOT NULL,
 	text varchar,
@@ -148,7 +148,7 @@ ALTER TABLE project.comment OWNER TO pythiaservice;
 -- ddl-end --
 
 -- object: project.sister_project | type: TABLE --
--- DROP TABLE IF EXISTS project.sister_project CASCADE;
+ DROP TABLE IF EXISTS project.sister_project CASCADE;
 CREATE TABLE project.sister_project(
 	id bigint NOT NULL,
 	project_id bigint,
@@ -161,7 +161,7 @@ ALTER TABLE project.sister_project OWNER TO pythiaservice;
 -- ddl-end --
 
 -- object: project.pmap_serial | type: SEQUENCE --
--- DROP SEQUENCE IF EXISTS project.pmap_serial CASCADE;
+ DROP SEQUENCE IF EXISTS project.pmap_serial CASCADE;
 CREATE SEQUENCE project.pmap_serial
 	INCREMENT BY 1
 	MINVALUE 0
@@ -175,7 +175,7 @@ ALTER SEQUENCE project.pmap_serial OWNER TO pythiaservice;
 -- ddl-end --
 
 -- object: project.comm_serial | type: SEQUENCE --
--- DROP SEQUENCE IF EXISTS project.comm_serial CASCADE;
+ DROP SEQUENCE IF EXISTS project.comm_serial CASCADE;
 CREATE SEQUENCE project.comm_serial
 	INCREMENT BY 1
 	MINVALUE 0

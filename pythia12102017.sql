@@ -61,6 +61,8 @@ CREATE TABLE project.project(
 ALTER TABLE project.project OWNER TO pythiaservice;
 -- ddl-end --
 
+CREATE TYPE status_enum AS ENUM ('WAITING_FOR_APPROVAL', 'APPROVED', 'REVERTED');
+
 -- object: project.plan | type: TABLE --
 -- DROP TABLE IF EXISTS project.plan CASCADE;
 CREATE TABLE project.plan(
@@ -70,7 +72,7 @@ CREATE TABLE project.plan(
 	sub_no smallint,
 	version smallint,
 	url varchar,
-	approved boolean,
+	plan_status project.status_enum,
 	created_at timestamptz,
 	created_by varchar,
 	updated_at timestamptz,

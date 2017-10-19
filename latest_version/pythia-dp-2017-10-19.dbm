@@ -49,6 +49,18 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	<column name="completed">
 		<type name="boolean"/>
 	</column>
+	<column name="created_at">
+		<type name="timestamptz"/>
+	</column>
+	<column name="created_by">
+		<type name="varchar"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamptz"/>
+	</column>
+	<column name="updated_by">
+		<type name="varchar"/>
+	</column>
 	<constraint name="projectid_pri" type="pk-constr" table="project.project">
 		<columns names="project_id" ref-type="src-columns"/>
 	</constraint>
@@ -71,12 +83,27 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 		<type name="smallint"/>
 	</column>
 	<column name="version">
-		<type name="varchar"/>
+		<type name="smallint"/>
 	</column>
 	<column name="url">
 		<type name="varchar"/>
 	</column>
-	<column name="approved">
+	<column name="status">
+		<type name="project.status_enum"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamptz"/>
+	</column>
+	<column name="created_by">
+		<type name="varchar"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamptz"/>
+	</column>
+	<column name="updated_by">
+		<type name="varchar"/>
+	</column>
+	<column name="deleted">
 		<type name="boolean"/>
 	</column>
 	<constraint name="planid_pri" type="pk-constr" table="project.plan">
@@ -126,22 +153,37 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	<column name="text">
 		<type name="varchar"/>
 	</column>
+	<column name="plan_id">
+		<type name="bigint"/>
+	</column>
+	<column name="url">
+		<type name="varchar"/>
+	</column>
 	<column name="approved">
 		<type name="boolean"/>
 	</column>
-	<column name="plan_id">
-		<type name="bigint"/>
+	<column name="created_at">
+		<type name="timestamptz"/>
+	</column>
+	<column name="created_by">
+		<type name="varchar"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamptz"/>
+	</column>
+	<column name="updated_by">
+		<type name="varchar"/>
 	</column>
 	<constraint name="comment_pri" type="pk-constr" table="project.comment">
 		<columns names="comment_id" ref-type="src-columns"/>
 	</constraint>
 </table>
 
-<table name="project_mapping">
+<table name="sister_project">
 	<schema name="project"/>
 	<role name="pythiaservice"/>
 	<position x="60" y="340"/>
-	<column name="mapping_id" not-null="true">
+	<column name="id" not-null="true">
 		<type name="bigint"/>
 	</column>
 	<column name="project_id">
@@ -150,8 +192,8 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	<column name="sister_project_id">
 		<type name="bigint"/>
 	</column>
-	<constraint name="project_pri" type="pk-constr" table="project.project_mapping">
-		<columns names="mapping_id" ref-type="src-columns"/>
+	<constraint name="project_pri" type="pk-constr" table="project.sister_project">
+		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 </table>
 
@@ -171,6 +213,28 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	<role name="postgres"/>
 </sequence>
 
+<view name="latest_plans">
+	<schema name="project"/>
+	<role name="postgres"/>
+	<appended-sql><![CDATA[SELECT * FROM project.latest_plans
+ORDER BY project.latest_plans.version DESC
+FETCH FIRST 2 ROWS ONLY;]]></appended-sql>
+	<position x="400" y="400"/>
+	<reference table="project.plan"/>
+	<expression type="select-exp">0</expression>
+</view>
+
+<relationship name="rel_latest_plans_plan" type="reltv"
+	 src-table="project.latest_plans"
+	 dst-table="project.plan"
+	 src-required="false" dst-required="false"/>
+
+<usertype name="status_enum" configuration="enumeration">
+	<schema name="project"/>
+	<role name="postgres"/>
+	<enumeration values="WAITING_FOR_APPROVAL,APPROVED,REVERTED"/>
+</usertype>
+
 <constraint name="projecid_for" type="fk-constr" comparison-type="MATCH FULL"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="project.project" table="project.plan">
 	<columns names="project_id" ref-type="src-columns"/>
@@ -184,7 +248,7 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 </constraint>
 
 <constraint name="project_fkey" type="fk-constr" comparison-type="MATCH FULL"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="project.project" table="project.project_mapping">
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="project.project" table="project.sister_project">
 	<columns names="project_id" ref-type="src-columns"/>
 	<columns names="project_id" ref-type="dst-columns"/>
 </constraint>
@@ -200,7 +264,7 @@ ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
 	 src-required="false" dst-required="false"/>
 
 <relationship name="rel_project_mapping_project" type="relfk"
-	 src-table="project.project_mapping"
+	 src-table="project.sister_project"
 	 dst-table="project.project"
 	 src-required="false" dst-required="false"/>
 
