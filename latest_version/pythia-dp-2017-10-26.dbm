@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.8.2" last-position="169,42" last-zoom="1"
+	 default-owner="postgres">
+<role name="pythiaservice"
+      createdb="true"
+      createrole="true"
+      login="true"
+      password="pythiaservice">
+	<appended-sql><![CDATA[GRANT CONNECT, CREATE
+ON DATABASE pythia TO pythiaservice;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON ALL TABLES IN SCHEMA project TO pythiaservice;]]></appended-sql>
+</role>
+
+<database name="new_database">
+</database>
+
+<schema name="public" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<schema name="project" rect-visible="true" fill-color="#e1e1e1">
+	<role name="pythiaservice"/>
+</schema>
+
+<table name="project">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+	<position x="580" y="340"/>
+	<column name="project_id" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="hansu_project_id">
+		<type name="varchar"/>
+	</column>
+	<column name="main_no">
+		<type name="smallint"/>
+	</column>
+	<column name="name">
+		<type name="varchar"/>
+	</column>
+	<column name="description">
+		<type name="varchar"/>
+	</column>
+	<column name="completed">
+		<type name="boolean"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamptz"/>
+	</column>
+	<column name="created_by">
+		<type name="varchar"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamptz"/>
+	</column>
+	<column name="updated_by">
+		<type name="varchar"/>
+	</column>
+	<constraint name="projectid_pri" type="pk-constr" table="project.project">
+		<columns names="project_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="project_index" table="project.project"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="project_id"/>
+		</idxelement>
+</index>
+
+<sequence name="proj_serial"
+	 start="1" increment="1"
+	 min-value="0" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+</sequence>
+
+<sequence name="plan_serial"
+	 start="1" increment="1"
+	 min-value="0" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+</sequence>
+
+<table name="ptext">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+	<position x="1380" y="320"/>
+	<column name="text_id" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="plan_id">
+		<type name="bigint"/>
+	</column>
+	<column name="url">
+		<type name="varchar"/>
+	</column>
+	<column name="approved">
+		<type name="boolean"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamptz"/>
+	</column>
+	<column name="created_by">
+		<type name="varchar"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamptz"/>
+	</column>
+	<column name="updated_by">
+		<type name="varchar"/>
+	</column>
+	<constraint name="comment_pri" type="pk-constr" table="project.ptext">
+		<columns names="text_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="sister_project">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+	<position x="200" y="260"/>
+	<column name="id" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="project_id">
+		<type name="bigint"/>
+	</column>
+	<column name="sister_project_id">
+		<type name="bigint"/>
+	</column>
+	<constraint name="project_pri" type="pk-constr" table="project.sister_project">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="pmap_serial"
+	 start="1" increment="1"
+	 min-value="0" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+</sequence>
+
+<sequence name="comm_serial"
+	 start="1" increment="1"
+	 min-value="0" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="project"/>
+	<role name="postgres"/>
+</sequence>
+
+<usertype name="status_enum" configuration="enumeration">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+	<enumeration values="WAITING_FOR_APPROVAL,APPROVED,REVERTED"/>
+</usertype>
+
+<table name="plan">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+	<comment><![CDATA[kadunpitopäätös]]></comment>
+	<position x="1000" y="300"/>
+	<column name="plan_id" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="project_id">
+		<type name="bigint"/>
+	</column>
+	<column name="main_no">
+		<type name="smallint"/>
+	</column>
+	<column name="sub_no">
+		<type name="smallint"/>
+	</column>
+	<column name="version">
+		<type name="smallint"/>
+	</column>
+	<column name="pdf_url">
+		<type name="varchar"/>
+	</column>
+	<column name="xml_url">
+		<type name="varchar"/>
+	</column>
+	<column name="status">
+		<type name="project.status_enum"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamptz"/>
+	</column>
+	<column name="created_by">
+		<type name="varchar"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamptz"/>
+	</column>
+	<column name="updated_by">
+		<type name="varchar"/>
+	</column>
+	<column name="deleted">
+		<type name="boolean"/>
+	</column>
+	<column name="maintenance_duty">
+		<type name="boolean"/>
+	</column>
+	<column name="street_management_decision">
+		<type name="timestamptz"/>
+	</column>
+	<constraint name="planid_pri" type="pk-constr" table="project.plan">
+		<columns names="plan_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="plan_id" table="project.plan"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="plan_id"/>
+		</idxelement>
+</index>
+
+<view name="latest_plans">
+	<schema name="project"/>
+	<role name="postgres"/>
+	<appended-sql><![CDATA[SELECT * FROM project.latest_plans
+ORDER BY project.latest_plans.version DESC
+FETCH FIRST 2 ROWS ONLY;]]></appended-sql>
+	<position x="1080" y="80"/>
+	<reference table="project.plan"/>
+	<expression type="select-exp">0</expression>
+</view>
+
+<relationship name="rel_latest_plans_plan" type="reltv"
+	 src-table="project.latest_plans"
+	 dst-table="project.plan"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="17.3694" y="-87.5408"/>
+	</label>
+</relationship>
+
+<usertype name="project_file_enum" configuration="enumeration">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+	<enumeration values="REFERENCE,TEXT_TABLE_PRESENTATION,IMAGE,EDGE_MEASUREMENT_LINE,FIELD_DATA,DRILLING_BORING,HANSU"/>
+</usertype>
+
+<sequence name="ref_serial"
+	 start="1" increment="1"
+	 min-value="0" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="project"/>
+	<role name="pythiaservice"/>
+</sequence>
+
+<constraint name="plan_fkey" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="project.plan" table="project.ptext">
+	<columns names="plan_id" ref-type="src-columns"/>
+	<columns names="plan_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="project_fkey" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="project.project" table="project.sister_project">
+	<columns names="project_id" ref-type="src-columns"/>
+	<columns names="project_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="projecid_for" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="project.project" table="project.plan">
+	<columns names="project_id" ref-type="src-columns"/>
+	<columns names="project_id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_comment_plan" type="relfk"
+	 src-table="project.ptext"
+	 dst-table="project.plan"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_sister_project_project" type="relfk"
+	 src-table="project.sister_project"
+	 dst-table="project.project"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_plan_project" type="relfk"
+	 src-table="project.plan"
+	 dst-table="project.project"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
